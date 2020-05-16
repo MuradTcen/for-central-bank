@@ -51,6 +51,10 @@ PO\Постановка задачи.docx
 
 Доступно описание API через SWAGGER: `http://localhost:8080/swagger-ui.html#/document-controller`
 
+Задеплоено на Heroku: `https://centralbank.herokuapp.com`
+
+Соответственно SWAGGER на Heroku: `https://centralbank.herokuapp.com/swagger-ui.html#/document-controller`
+
 
 <a href="https://priscree.ru/img/e1c9fb450395a3.png" target="_blank">
 <img src="https://priscree.ru/img/e1c9fb450395a3.png" border="0"></a>
