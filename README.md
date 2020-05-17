@@ -41,6 +41,8 @@ PO\Постановка задачи.docx
 
 ----
 
+Сборка проекта: `./gradlew build`
+
 Сборка докер-контейнера: `sudo docker build -t app .`
 
 Запуск докер-контейнера: `sudo docker run -p 8080:8080 app`
