@@ -21,7 +21,7 @@ public class DocumentController {
     @ApiOperation(value = "Остановить диспетчер и получить список ненапечатанных документов")
     @GetMapping(path = "stop-manager")
     public List<Document> stopManager() {
-        return service.getCanceledDocuments();
+        return service.stopPrintingAndGetCanceledDocuments();
     }
 
     @ApiOperation(value = "Запустить диспетчер")
@@ -61,5 +61,11 @@ public class DocumentController {
     @GetMapping(path = "get-average-duration")
     public long getAverageDurationPrinting() {
         return service.getAverageDurationPrintedDocuments();
+    }
+
+    @ApiOperation(value = "Получить документ по типу")
+    @GetMapping(path = "get-document-by-type")
+    public Document getDocumentByType(@RequestParam(required = false, defaultValue = "") String type) {
+        return service.getDocumentByType(type);
     }
 }
