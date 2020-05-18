@@ -17,6 +17,7 @@ public class PrinterService {
 
     private final List<Document> printedDocuments = new ArrayList<>();
     private List<Document> canceledDocuments = new ArrayList<>();
+    // Список названий документов, которые не должны быть приняты к печати
     private List<String> markCanceledDocuments = Collections.synchronizedList(new ArrayList<>());
 
     private volatile boolean working = true;
@@ -33,15 +34,11 @@ public class PrinterService {
     List<Document> getRemovedDocuments() {
         Future<List<Document>> task = executor.submit(new GetCanceledDocuments(this));
 
-        log.info("Получение ненапечатанные документы");
+        log.info("Получение ненапечатанных документы");
 
         try {
             return task.get(WAITING_TIME, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            logError(e);
-        } catch (ExecutionException e) {
-            logError(e);
-        } catch (TimeoutException e) {
+        } catch (Exception e) {
             logError(e);
         }
 
