@@ -59,8 +59,9 @@ public class DocumentController {
 
     @ApiOperation(value = "Рассчитать среднюю продолжительность печати напечатанных документов")
     @GetMapping(path = "get-average-duration")
-    public long getAverageDurationPrinting() {
-        return service.getAverageDurationPrintedDocuments();
+    public String getAverageDurationPrinting() {
+        return "Средняя продолжительность печатания напечатанных документов " +
+                service.getAverageDurationPrintedDocuments() + " (мс)";
     }
 
     @ApiOperation(value = "Получить документ по типу")
