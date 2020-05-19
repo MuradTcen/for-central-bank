@@ -68,4 +68,10 @@ public class DocumentController {
     public Document getDocumentByType(@RequestParam(required = false, defaultValue = "") String type) {
         return service.getDocumentByType(type);
     }
+
+    @ApiOperation(value = "Очистить списки документов")
+    @GetMapping(path = "clear")
+    public void clear() {
+        service.clear();
+    }
 }

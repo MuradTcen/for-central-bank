@@ -26,5 +26,7 @@ public interface ManagerService {
     long getAverageDurationPrintedDocuments();
 
     Document getDocumentByType(String type);
+
+    void clear();
 }
 

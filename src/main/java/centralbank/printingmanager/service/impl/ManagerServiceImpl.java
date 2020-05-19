@@ -24,7 +24,7 @@ public class ManagerServiceImpl implements ManagerService {
     // Храним принтеры в managers, в данном случае есть дефолтный принтер на который мы направляем документы
     // Можно расширить функционал и добавить другие принтеры, и в роуты добавить явное указание принтера
     // на который отправляются документы на печать
-    private HashMap<String, PrinterServiceImpl> managers = new HashMap<>();
+    private HashMap<String, PrinterServiceImpl> printers = new HashMap<>();
     private static final String DEFAULT_PRINTER = "default";
     private static final String RESPONSE_FOR_START = "Принтер запущен";
     private static final String RESPONSE_FOR_SEND_DOCUMENT_SUCCESS = "Документ отправлен на печать";
@@ -33,12 +33,12 @@ public class ManagerServiceImpl implements ManagerService {
     private static final String RESPONSE_FOR_CANCEL_DOCUMENT = "Документ не будет напечатан, если он находится в очереди печати";
 
     {
-        managers.put(DEFAULT_PRINTER, new PrinterServiceImpl());
+        printers.put(DEFAULT_PRINTER, new PrinterServiceImpl());
     }
 
     public String sendDocument(Document document) {
-        if (managers.get(DEFAULT_PRINTER).isWorking()) {
-            managers.get(DEFAULT_PRINTER).processDocument(document);
+        if (printers.get(DEFAULT_PRINTER).isWorking()) {
+            printers.get(DEFAULT_PRINTER).processDocument(document);
 
             return RESPONSE_FOR_SEND_DOCUMENT_SUCCESS;
         }
@@ -47,35 +47,35 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     public void sendStop() {
-        managers.get(DEFAULT_PRINTER).setWorking(false);
+        printers.get(DEFAULT_PRINTER).setWorking(false);
     }
 
     public String sendStart() {
-        managers.get(DEFAULT_PRINTER).setWorking(true);
+        printers.get(DEFAULT_PRINTER).setWorking(true);
         log.info(RESPONSE_FOR_START);
         return RESPONSE_FOR_START;
     }
 
     public String cancelDocument(String name) {
         log.info("Отмена печати документа с названием: " + name);
-        managers.get(DEFAULT_PRINTER).getMarkCanceledDocuments().add(name);
+        printers.get(DEFAULT_PRINTER).getMarkCanceledDocuments().add(name);
         return RESPONSE_FOR_CANCEL_DOCUMENT;
     }
 
     public List<Document> stopPrintingAndGetCanceledDocuments() {
         log.info("Завершение печати документов");
         sendStop();
-        return managers.get(DEFAULT_PRINTER).getRemovedDocuments();
+        return printers.get(DEFAULT_PRINTER).getRemovedDocuments();
     }
 
     public List<Document> getPrintedDocuments(DocumentSort documentSort, String order) {
         log.info("Получение напечатанных документов");
-        return getSortedDocuments(managers.get(DEFAULT_PRINTER).getPrintedDocuments(), documentSort, order);
+        return getSortedDocuments(printers.get(DEFAULT_PRINTER).getPrintedDocuments(), documentSort, order);
     }
 
     public List<Document> getUnprintedDocuments(DocumentSort documentSort, String order) {
         log.info("Получение ненапечатанных документов");
-        return getSortedDocuments(managers.get(DEFAULT_PRINTER).getCanceledDocuments(), documentSort, order);
+        return getSortedDocuments(printers.get(DEFAULT_PRINTER).getCanceledDocuments(), documentSort, order);
     }
 
     public List<Document> getSortedDocuments(List<Document> documents, DocumentSort documentSort, String order) {
@@ -107,7 +107,7 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     public long getAverageDurationPrintedDocuments() {
-        return managers.get(DEFAULT_PRINTER).getAverageDuration();
+        return printers.get(DEFAULT_PRINTER).getAverageDuration();
     }
 
     public Document getDocumentByType(String type) {
@@ -125,5 +125,12 @@ public class ManagerServiceImpl implements ManagerService {
             default:
                 return new Document(5000, "regular", DocumentType.TYPE_1, DocumentSize.A2);
         }
+    }
+
+    @Override
+    public void clear() {
+        printers.get(DEFAULT_PRINTER).getPrintedDocuments().clear();
+        printers.get(DEFAULT_PRINTER).getCanceledDocuments().clear();
+        printers.get(DEFAULT_PRINTER).getMarkCanceledDocuments().clear();
     }
 }
