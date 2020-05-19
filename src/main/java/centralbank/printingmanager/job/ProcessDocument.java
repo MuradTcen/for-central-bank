@@ -1,7 +1,7 @@
 package centralbank.printingmanager.job;
 
 import centralbank.printingmanager.entity.Document;
-import centralbank.printingmanager.service.PrinterService;
+import centralbank.printingmanager.service.impl.PrinterServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ProcessDocument implements Runnable {
 
     private final Document document;
-    private final PrinterService manager;
+    private final PrinterServiceImpl manager;
 
     @Override
     public void run() {

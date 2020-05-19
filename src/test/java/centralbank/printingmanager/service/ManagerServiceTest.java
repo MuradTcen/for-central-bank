@@ -4,6 +4,7 @@ import centralbank.printingmanager.entity.Document;
 import centralbank.printingmanager.entity.DocumentSize;
 import centralbank.printingmanager.entity.DocumentSort;
 import centralbank.printingmanager.entity.DocumentType;
+import centralbank.printingmanager.service.impl.ManagerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,7 +56,7 @@ class ManagerServiceTest {
 
     @BeforeEach
     void init() {
-        managerService = new ManagerService();
+        managerService = new ManagerServiceImpl();
     }
 
 

@@ -2,7 +2,7 @@ package centralbank.printingmanager.controller;
 
 import centralbank.printingmanager.entity.Document;
 import centralbank.printingmanager.entity.DocumentSort;
-import centralbank.printingmanager.service.ManagerService;
+import centralbank.printingmanager.service.impl.ManagerServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class DocumentController {
-    private final ManagerService service;
+    private final ManagerServiceImpl service;
 
     @ApiOperation(value = "Остановить диспетчер и получить список ненапечатанных документов")
     @GetMapping(path = "stop-manager")
